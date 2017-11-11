@@ -1,0 +1,12 @@
+{
+  "name": "foreign_key",
+  "version": "1.0.0",
+  "description": "Practice a new Spanish word with each new tab",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Devon JohnBaptiste",
+  "license": "ISC"
+}
