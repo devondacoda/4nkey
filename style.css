@@ -1,11 +1,8 @@
-* {
-  font-family: 'Fjalla One', sans-serif;  
-}
-
 body, html { 
   margin: 0;
   height: 100%;
   overflow: hidden;
+  font-family: 'Amatic SC', cursive;
 }
 
 .word-container {
@@ -13,33 +10,50 @@ body, html {
   justify-content: center;
   align-items: flex-end;
   height: 100vh;
+  background: #ffffff!important;
+}
+.word-holder {
+  text-align: center;
+ }
+.word {
+  font-family: 'Poiret One', cursive;
+  color: #FFC94C!important;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
 }
 
 .definition-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 50vh;
- }
-
-.img-talk {
-  position: absolute;
-  height: 50px;
-  margin-top: 50px;
-  z-index: 2;
+  padding: 10px;
+  height: 100vh;
+  background: #FFC94C!important;
+}
+.definition-holder {
+  text-align: center;
 }
 
-.img-speak {
-  position: absolute;
+.img-listen {
+  height: 50px;
+}
+
+.img-mic {
+  height: 50px;
+}
+
+.img-mic-on {
   height: 48px;
-  margin-top: 50px;
 }
 
 .score-container {
   right: 0;
   position: absolute;
   z-index: 3;
-  color: white;
+  font-size: 3em;
   margin: 30px;
 }
 

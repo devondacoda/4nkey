@@ -6,7 +6,8 @@
   <title>New Tab</title>
   <link href="favicon.ico" rel="icon" sizes="16x16" type="image/x-icon">
   <link href="bootstrap.css" type="text/css"  rel="stylesheet" >
-  <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
   <link href="style.css" type="text/css" rel="stylesheet">
   <script src="scripts/annyang.min.js"></script>
 </head>
@@ -15,15 +16,19 @@
   <div class="column" id="content-container">
     <p class="lead score-container">Score: <span class="score"></span></p>
 
-    <div class="col-md-12 bg-dark word-container">
-      <img class="img-listen" hidden="true" src="imgs/volume.svg" />
-      <h1 class="text-center text-white display-1 word"></h1>
+    <div class="word-container">
+      <div class="word-holder">
+        <img class="img-listen" src="imgs/volume.svg" />
+        <h1 class="display-1 word"></h1>
+      </div>
     </div>
 
-    <div class="col-md-12 bg-light definition-container">
-      <p class="lead definition"></p>
-      <img class="img-talk" src="imgs/microphone.svg" />
-      <img class="img-speak" hidden="true" src="imgs/microphone-on.png" />
+    <div class="definition-container">
+      <div class="definition-holder">
+        <p class="display-3 definition"></p>
+        <img class="img-mic" src="imgs/microphone.svg" />
+        <img class="img-mic-on" hidden="true" src="imgs/microphone-on.png" />
+      </div>
     </div>
   </div>
 
