@@ -90,7 +90,7 @@ annyang.addCallback('result', (res) => {
     wordsCorrectlySaid[selectedWord] = dictionary[selectedWord];
     // delete dictionary[selectedWord];
     localStorage.setItem('dictionary', JSON.stringify({ hola: 'hello' }));
-    getSetStore(dictionary);
+    getSetStore();
     getFormatSetWord();
   } else {
     audio = new Audio('/sounds/try-again.wav');
