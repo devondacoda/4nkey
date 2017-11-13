@@ -37,7 +37,8 @@ definitions.forEach((entry) => {
   dictionary[entryWord] = entryDefinition;
 });
 
-const browserDictionary = JSON.parse(localStorage.getItem('dictionary'));
+let browserDictionary = JSON.parse(localStorage.getItem('dictionary'));
+if (!browserDictionary) browserDictionary = dictionary;
 const getSetStore = (wordCollection = dictionary) => {
   localStorage.setItem('dictionary', JSON.stringify(wordCollection));
   dictionary = JSON.parse(localStorage.getItem('dictionary'));
@@ -128,19 +129,16 @@ const eventHandlers = {
     annyang.start({ autoRestart: false, continuous: false });
   },
   translate(userWordInput) {
-    const { requirejs } = window;
-    requirejs(['./secrets'], (file) => {
-      const k = file.yandexApiKey;
-      fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
-        .then(res => res.text())
-        .then((translation) => {
-          const { text } = JSON.parse(translation);
-          const [translatedWord] = text;
-          dictionary[translatedWord] = userWordInput;
-          getFormatSetWord(translatedWord, userWordInput);
-          getSetStore();
-        });
-    });
+    const k = config.YANDEX_KEY;
+    fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
+      .then(res => res.text())
+      .then((translation) => {
+        const { text } = JSON.parse(translation);
+        const [translatedWord] = text;
+        dictionary[translatedWord] = userWordInput;
+        getFormatSetWord(translatedWord, userWordInput);
+        getSetStore();
+      });
   },
 };
 
