@@ -6,23 +6,26 @@
   <title>New Tab</title>
   <link href="favicon.ico" rel="icon" sizes="16x16" type="image/x-icon">
   <link href="bootstrap.css" type="text/css"  rel="stylesheet" >
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
   <link href="style.css" type="text/css" rel="stylesheet">
   <script src="scripts/annyang.min.js"></script>
 </head>
 
 <body>
-  <div class="column" id="content-container">
-    <p class="lead score-container">Score: <span class="score"></span></p>
-
+  <div class="column" id="content-container">   
+    <div class="page-top">
+      <p class="title-container">Foreign Key: <span>Spanish</span></p>
+      <p class="score-container">Score: <span class="score"></span></p>
+      <input class="search-box form-control form-control-lg" hidden="true" type="text" placeholder="how are you" />
+    </div> 
+    
     <div class="word-container">
       <div class="word-holder">
         <img class="img-listen" src="imgs/volume.svg" />
-        <h1 class="display-1 word"></h1>
+        <p class="display-1 word"></p>
       </div>
     </div>
-
+    
     <div class="definition-container">
       <div class="definition-holder">
         <p class="display-3 definition"></p>
@@ -31,12 +34,12 @@
       </div>
     </div>
   </div>
-
+  
   <script src="scripts/jquery-3.2.1.min.js"></script>
   <script src="scripts/tether.min.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
-
-  <script src="app.js"></script>
+  
+  <script data-main="scripts/app" src="scripts/require.js"></script>
 </body>
 
 </html>

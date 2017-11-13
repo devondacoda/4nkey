@@ -1,10 +1,11 @@
-const dictionary = {};
+let dictionary = {};
+const wordsCorrectlySaid = {};
 const definitions = [
   'alardear - to brag',
   'apestar - to stink',
   'araña - spider',
   'bostezar - to yawn',
-  'budin - pudding',
+  'budín - pudding',
   'burbuja - bubble',
   'cacahuete - peanut',
   'calabaza - pumpkin',
@@ -35,27 +36,48 @@ definitions.forEach((entry) => {
   const [entryWord, entryDefinition] = entry.split(' - ');
   dictionary[entryWord] = entryDefinition;
 });
+
+const browserDictionary = JSON.parse(localStorage.getItem('dictionary'));
+const getSetStore = (wordCollection = dictionary) => {
+  localStorage.setItem('dictionary', JSON.stringify(wordCollection));
+  dictionary = JSON.parse(localStorage.getItem('dictionary'));
+};
+getSetStore(browserDictionary);
 // ────────────────────────────────────────────────────────────────────────────────
 // Word formatting for speech:
-const selectedWord = Object.keys(dictionary)[Math.floor(Math.random() * (definitions.length))];
-// Removes slashes from upcoming pronounciation
-let say = selectedWord.includes('/') ? selectedWord.slice(0, selectedWord.indexOf('/')) :
-  selectedWord;
-// Removes parenthesized word from being pronounced (e.g. 'sonreir(se)' => 'sonreir')
-say = say.includes('(') ? say.slice(0, say.indexOf('(')) : say;
-
 const word = document.querySelector('.word');
 const definition = document.querySelector('.definition');
-word.textContent = selectedWord;
-definition.textContent = dictionary[selectedWord];
+let selectedWord = null;
+let say = null;
+const getFormatSetWord = (foreignWord) => {
+  selectedWord = !foreignWord
+    ? Object.keys(dictionary)[Math.floor(Math.random() * (definitions.length))]
+    : foreignWord;
+  // Removes slashes from upcoming pronounciation
+  say = selectedWord.includes('/') ? selectedWord.slice(0, selectedWord.indexOf('/')) :
+    selectedWord;
+  // Removes parenthesized word from being pronounced (e.g. 'sonreir(se)' => 'sonreir')
+  say = say.includes('(') ? say.slice(0, say.indexOf('(')) : say;
+  say = say.replace(/[.,/#!$%^&*;:{}=\-_`~()?¿\\]/g, '').toLowerCase();
+  word.textContent = selectedWord;
+  definition.textContent = dictionary[selectedWord];
+};
+getFormatSetWord();
 
 // ────────────────────────────────────────────────────────────────────────────────
-// Annyang config for speech recognition:
+// Annyang config for speech recognition and score update + persist:
 const { annyang } = window;
 const [microphone, micOn] = document.querySelectorAll('.img-mic, .img-mic-on');
+
 const score = document.querySelector('.score');
-const totalScore = JSON.parse(localStorage.getItem('score'));
-score.textContent = totalScore;
+let totalScore = JSON.parse(localStorage.getItem('score'));
+score.textContent = totalScore || 0;
+const updateScore = () => {
+  totalScore = JSON.parse(localStorage.getItem('score'));
+  localStorage.setItem('score', JSON.stringify(totalScore + 2));
+  const newTotalScore = JSON.parse(localStorage.getItem('score'));
+  score.textContent = newTotalScore;
+};
 
 annyang.setLanguage('es-US');
 annyang.addCallback('result', (res) => {
@@ -64,10 +86,12 @@ annyang.addCallback('result', (res) => {
   if (results.includes(say)) {
     audio = new Audio('/sounds/correct.wav');
     audio.play();
-
-    localStorage.setItem('score', JSON.stringify(totalScore + 2));
-    const newTotalScore = JSON.parse(localStorage.getItem('score'));
-    score.textContent = newTotalScore;
+    updateScore();
+    wordsCorrectlySaid[selectedWord] = dictionary[selectedWord];
+    delete dictionary[selectedWord];
+    localStorage.setItem('dictionary', JSON.stringify({ hola: 'hello' }));
+    getSetStore(dictionary);
+    getFormatSetWord();
   } else {
     audio = new Audio('/sounds/try-again.wav');
     audio.play();
@@ -93,12 +117,30 @@ const eventHandlers = {
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(say);
     utterance.lang = 'es-US';
+    const englishUtterance = new SpeechSynthesisUtterance(`. ${dictionary[selectedWord]}`);
+    englishUtterance.lang = 'en-US';
     speechSynthesis.speak(utterance);
+    speechSynthesis.speak(englishUtterance);
   },
   recognizeSpeech() {
+    speechSynthesis.cancel();
     annyang.abort();
-    annyang.debug();
     annyang.start({ autoRestart: false, continuous: false });
+  },
+  translate(userWordInput) {
+    const { requirejs } = window;
+    requirejs(['./secrets'], (file) => {
+      const k = file.yandexApiKey;
+      fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
+        .then(res => res.text())
+        .then((translation) => {
+          const { text } = JSON.parse(translation);
+          const [translatedWord] = text;
+          dictionary[translatedWord] = userWordInput;
+          getFormatSetWord(translatedWord, userWordInput);
+          getSetStore();
+        });
+    });
   },
 };
 
@@ -126,6 +168,26 @@ $(document).ready(() => {
       $('body, html').animate({ scrollTop: 0 }, 200);
       window.scrollY = 0;
     }
+  });
+
+  $(document).keyup((e) => {
+    if (e.keyCode === 39) return getFormatSetWord();
+    if (e.keyCode === 13) {
+      const searchBox = document.querySelector('.search-box');
+
+      if (searchBox.hasAttribute('hidden')) {
+        searchBox.removeAttribute('hidden');
+        searchBox.value = '';
+        $('.search-box').focus();
+      } else {
+        searchBox.setAttribute('hidden', true);
+      }
+    }
+    return null;
+  });
+
+  $('.search-box').on('change', (e) => {
+    eventHandlers.translate(e.target.value.toLowerCase());
   });
 });
 

@@ -2,7 +2,32 @@ body, html {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  font-family: 'Amatic SC', cursive;
+  font-family: 'Poiret One', cursive;
+}
+
+.title-container {
+  position: absolute;
+  z-index: 3;
+  font-size: 1.8em;
+  margin: 30px;
+}
+
+.search-box {
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  margin: 30px;
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 45vw;
+}
+
+.score-container {
+  right: 0;
+  position: absolute;
+  z-index: 3;
+  font-size: 1.8em;
+  margin: 30px;
 }
 
 .word-container {
@@ -10,14 +35,9 @@ body, html {
   justify-content: center;
   align-items: flex-end;
   height: 100vh;
-  background: #ffffff!important;
-}
-.word-holder {
+  background: #ffffff;
   text-align: center;
- }
-.word {
-  font-family: 'Poiret One', cursive;
-  color: #FFC94C!important;
+  color: #FFC94C;
   text-shadow:
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -31,10 +51,14 @@ body, html {
   align-items: flex-start;
   padding: 10px;
   height: 100vh;
-  background: #FFC94C!important;
-}
-.definition-holder {
+  background: #FFC94C;
   text-align: center;
+  color: #ffffff;
+  text-shadow:
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
 }
 
 .img-listen {
@@ -49,12 +73,58 @@ body, html {
   height: 48px;
 }
 
-.score-container {
-  right: 0;
-  position: absolute;
-  z-index: 3;
-  font-size: 3em;
-  margin: 30px;
+@media (max-width: 520px) {
+  .page-top {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+  .title-container { 
+    position: relative;
+    margin: 0;
+    font-size: 1.3em;
+  }
+  .score-container {
+    position: relative;
+    margin: 0;
+    font-size: 1.3em;
+  }
+  .word {
+    font-size: 3em!important;
+  }
+  .definition {
+    font-size: 3em!important;
+  }
 }
 
+@media (max-height: 375px) {
+  .page-top {
+    position: absolute;
+    width: 100%;
+  }
 
+  .title-container { 
+    margin: 20px;
+    font-size: 1.3em;
+  }
+
+  .score-container {
+    margin: 20px;
+    font-size: 1.3em;
+  }
+
+  .word {
+    font-size: 3em!important;
+  }
+
+  .definition {
+    font-size: 3em!important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .search-box {
+    margin-top: 10vh;
+    width: 45vw;
+  }
+}

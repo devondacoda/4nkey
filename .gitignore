@@ -2,3 +2,4 @@ node_modules
 manifest.json
 popup.html
 popup.js
+scripts/secrets.js
