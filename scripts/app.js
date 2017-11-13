@@ -88,7 +88,7 @@ annyang.addCallback('result', (res) => {
     audio.play();
     updateScore();
     wordsCorrectlySaid[selectedWord] = dictionary[selectedWord];
-    delete dictionary[selectedWord];
+    // delete dictionary[selectedWord];
     localStorage.setItem('dictionary', JSON.stringify({ hola: 'hello' }));
     getSetStore(dictionary);
     getFormatSetWord();
