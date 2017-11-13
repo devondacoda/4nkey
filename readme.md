@@ -4,10 +4,15 @@
 
 ## Gameplay
 Pronounce the word correctly to score points and switch to a different word.
+
 Press 'Enter' to open up search box to translate and add your own word to the library.
+
 Press '→' to go to a new word.
+
 Click on the speaker icon to hear the Spanish, then English pronunciation.
+
 Click on the mic to start speech recognition.
+
 Click anywhere else to toggle translated word view.
 
 ## Visit https://devondacoda.github.io/4nkey/ for live demo.
