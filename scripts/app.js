@@ -67,7 +67,7 @@ getFormatSetWord();
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Annyang config for speech recognition and score update + persist:
-// const { annyang } = window;
+const { annyang } = window;
 const [microphone, micOn] = document.querySelectorAll('.img-mic, .img-mic-on');
 
 const score = document.querySelector('.score');
@@ -129,15 +129,19 @@ const eventHandlers = {
     annyang.start({ autoRestart: false, continuous: false });
   },
   translate(userWordInput) {
-    fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key='trnsl.1.1.20171113T005310Z.2ae836d580c61f17.ece7ab56fa1999c8729c6c5f23ce6c9cbae5aa9a'&text=${userWordInput}&lang=en-es`)
-      .then(res => res.text())
-      .then((translation) => {
-        const { text } = JSON.parse(translation);
-        const [translatedWord] = text;
-        dictionary[translatedWord] = userWordInput;
-        getFormatSetWord(translatedWord, userWordInput);
-        getSetStore();
-      });
+    const { requirejs } = window;
+    requirejs(['./secrets'], (file) => {
+      const k = file.yandexApiKey;
+      fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
+        .then(res => res.text())
+        .then((translation) => {
+          const { text } = JSON.parse(translation);
+          const [translatedWord] = text;
+          dictionary[translatedWord] = userWordInput;
+          getFormatSetWord(translatedWord, userWordInput);
+          getSetStore();
+        });
+    });
   },
 };
 
