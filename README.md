@@ -15,7 +15,7 @@ Click on the mic to start speech recognition.
 
 Click anywhere else to toggle translated word view.
 
-## Visit https://devondacoda.github.io/Foreignkey/ for live demo.
+## Visit https://devondacoda.github.io/foreign-key/ for live demo.
 
 ## To be added: 
 Level based learning 
