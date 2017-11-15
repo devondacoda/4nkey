@@ -79,7 +79,6 @@ const updateScore = () => {
   const newTotalScore = JSON.parse(localStorage.getItem('score'));
   score.textContent = newTotalScore;
 };
-
 annyang.setLanguage('es-US');
 annyang.addCallback('result', (res) => {
   let audio = null;
@@ -129,19 +128,18 @@ const eventHandlers = {
     annyang.start({ autoRestart: false, continuous: false });
   },
   translate(userWordInput) {
-    const { requirejs } = window;
-    requirejs(['./secrets'], (file) => {
-      const k = file.yandexApiKey;
-      fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
-        .then(res => res.text())
-        .then((translation) => {
-          const { text } = JSON.parse(translation);
-          const [translatedWord] = text;
-          dictionary[translatedWord] = userWordInput;
-          getFormatSetWord(translatedWord, userWordInput);
-          getSetStore();
-        });
-    });
+    $.get('/api/translate')
+      .then((k) => {
+        fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
+          .then(res => res.text())
+          .then((translation) => {
+            const { text } = JSON.parse(translation);
+            const [translatedWord] = text;
+            dictionary[translatedWord] = userWordInput;
+            getFormatSetWord(translatedWord, userWordInput);
+            getSetStore();
+          });
+      });
   },
 };
 

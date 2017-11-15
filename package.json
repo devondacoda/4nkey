@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "Practice a new Spanish word with each new tab",
   "main": "scripts/app.js",
-  "start": "node app.js",
+  "engines": {
+    "node": "8.4.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
   },
   "keywords": [],
   "author": "Devon JohnBaptiste",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2"
+  }
 }
