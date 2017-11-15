@@ -130,7 +130,6 @@ const eventHandlers = {
   translate(userWordInput) {
     $.get('/api/translate')
       .then((k) => {
-        console.log(k)
         fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${k}&text=${userWordInput}&lang=en-es`)
           .then(res => res.text())
           .then((translation) => {
