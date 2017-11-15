@@ -8,8 +8,9 @@ const app = express();
 app.use('/api', apiRouter);
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.listen(8080, () => {
-  console.log('listening homie!');
+const PORT = 8080;
+app.listen(PORT, () => {
+  console.log(`listening on PORT ${PORT}, homie!`);
 });
 
 app.use('*', (req, res) => {
