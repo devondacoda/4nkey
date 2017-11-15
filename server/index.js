@@ -7,15 +7,15 @@ const app = express();
 
 app.use('/api', apiRouter);
 app.use(express.static(path.join(__dirname, '..', 'public')));
-
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`listening on PORT ${PORT}, homie!`);
-});
-
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 });
+
+const PORT = 8080;
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`listening on PORT ${PORT}, homie!`);
+});
+
 
 app.use((err, req, res, next) => {
   console.error(err);
