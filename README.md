@@ -1,6 +1,5 @@
 # Foreign Key
 ## A simple app to learn and practice random Spanish words
-### A soon to be Chrome extension which serves up a new Spanish word on each new tab.
 
 ## Gameplay
 Pronounce the word correctly to score points and switch to a different word.
